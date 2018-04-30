@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Create Build Docker For Tensorflow-CPU-MKL') {
             steps {
-	              sh 'docker build -f Dockerfile.devel-cpu-mkl -t yi/tflow:0.0 .'  
+	              sh 'docker build -t yi/tflow:0.0 .'  
             }
         }
 	      stage('Test The yi/tflow:0.0 Docker Image') { 
