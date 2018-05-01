@@ -40,7 +40,8 @@ RUN apt-get update && \
     nano \
     tzdata \
     mlocate \
-	  sudo \
+    sudo \
+    pv \
     golang \
     vim \
     emacs \
@@ -152,7 +153,10 @@ COPY lib/. /usr/local/lib
 # Check Tensorflow Installation #
 #################################
  
-COPY cpu_tf_check.py /
+COPY /
+     cpu_tf_check.py /
+     unitest.py /
+     build_tf_package.sh
 
 
 #########################################
@@ -163,11 +167,11 @@ RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 	>> /etc/bash.bashrc \
 	; echo "\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
-|						                                     |\n\
-| Docker container running Ubuntu		             |\n\
+|						 |\n\
+| Docker container running Ubuntu		 |\n\
 | with TensorFlow ${TF_BRANCH} optimized for CPU |\n\
-| with Intel(R) MKL Support			                 |\n\
-|					                                       |\n\
+| with Intel(R) MKL Support			 |\n\
+|					         |\n\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
 \n "\
 	> /etc/motd
