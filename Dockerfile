@@ -153,12 +153,9 @@ COPY lib/. /usr/local/lib
 # Check Tensorflow Installation #
 #################################
  
-COPY \
-     cpu_tf_check.py \
-     unitest.py \
-     build_tf_package.sh
-
-
+COPY cpu_tf_check.py unitest.py build_tf_package.sh /
+      
+    
 #########################################
 # Add welcome message with instructions #
 #########################################
