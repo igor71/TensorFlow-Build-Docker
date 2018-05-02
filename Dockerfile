@@ -146,7 +146,7 @@ ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 COPY lib/. /usr/local/lib
 COPY /media/common/IT/jenkins_8/Server_6/lib/libmklml_gnu.so /usr/local/lib
-
+COPY /media/common/IT/jenkins_8/Server_6/lib/libmklml_intel.so /usr/local/lib
 
 ####################################################
 
