@@ -11,7 +11,7 @@ export CC_OPT_FLAGS='-march=native' TF_NEED_JEMALLOC=0 TF_NEED_GCP=0 TF_NEED_CUD
 
 export TF_NEED_S3=0 TF_NEED_OPENCL=0 TF_NEED_GDR=0 TF_ENABLE_XLA=0 TF_NEED_VERBS=0 TF_NEED_MPI=0
 
-export TF_NEED_KAFKA=0 TF_NEED_OPENCL_SYCL=0 
+export TF_NEED_KAFKA=0 TF_NEED_OPENCL_SYCL=0
 
 yes N |./configure
 
@@ -23,6 +23,7 @@ yes N |./configure
 # ##################################################################################################
 
 WHL_DIR=/whl
+HOME=/home/jenkins
 
 bazel build --config="opt" \
             --config=mkl \
@@ -32,4 +33,16 @@ bazel build --config="opt" \
             mkdir ${WHL_DIR} && \
             bazel-bin/tensorflow/tools/pip_package/build_pip_package ${WHL_DIR}
 
+#######################################################################
+# Copy tensorflow package from build folder to jenkins home directory #
+#######################################################################
+
+cp ${WHL_DIR}/tensorflow-*.whl $HOME
+
+cd ${HOME}
+ls -lh tensorflow-*.whl
+     if [ "$?" != "0" ]; then
+          echo "There is no tensorflow package in $HOME dir!!!"
+          exit -1
+     fi
 echo "All Done!!! Look for tensorflow whl package at ${WHL_DIR}"
