@@ -140,13 +140,17 @@ ENV CI_BUILD_PYTHON=python \
 ############################################################
 
     
-################ INTEL MKL SUPPORT #################
+################ INTEL MKL SUPPORT ########################################################
 
 ENV LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-COPY lib/. /usr/local/lib
+ARG CRED="server:123server123"
+RUN cd /usr/local/lib && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libiomp5.so -o libiomp5.so && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libmklml_gnu.so -o libmklml_gnu.so && \
+    curl -u ${CRED} ftp://yifileserver/IT/YiIT/lib/libmklml_intel.so -o libmklml_intel.so
 
-####################################################
+###########################################################################################
 
 
 #################################
@@ -157,18 +161,18 @@ COPY cpu_tf_check.py unitest.py build_tf_package.sh /
       
     
 #########################################
-# Add welcome message with instructions #
+# Add Welcome Message With Instructions #
 #########################################
 
 RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
 	>> /etc/bash.bashrc \
 	; echo "\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
-|						 |\n\
-| Docker container running Ubuntu		 |\n\
-| with TensorFlow ${TF_BRANCH} optimized for CPU |\n\
-| with Intel(R) MKL Support			 |\n\
-|					         |\n\
+|                                                |\n\
+| Docker container running Ubuntu                |\n\
+| with TensorFlow ${TF_BRANCH} optimized for CPU         |\n\
+| with Intel(R) MKL Support                      |\n\
+|                                                |\n\
 ||||||||||||||||||||||||||||||||||||||||||||||||||\n\
 \n "\
 	> /etc/motd
