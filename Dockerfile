@@ -63,9 +63,11 @@ RUN pip --no-cache-dir install --upgrade \
     pip setuptools
     
 RUN pip --no-cache-dir install \
+    ipykernel \
     wheel \
     numpy==1.14.5 \
-    mock
+    mock && \
+    python -m ipykernel.kernelspec
    
  
 ##################################
