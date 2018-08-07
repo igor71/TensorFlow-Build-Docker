@@ -65,7 +65,7 @@ RUN pip --no-cache-dir install --upgrade \
 RUN pip --no-cache-dir install \
     wheel \
     numpy==1.14.5 \
-    enum
+    mock
    
  
 ##################################
