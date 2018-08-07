@@ -1,2 +1,2 @@
 # TensorFlow-Build-Docker
-Docker Based Tensorflow Package Build Environment
+Docker Based Tensorflow-CPU Package Build Environment
