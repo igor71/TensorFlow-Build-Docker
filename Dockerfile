@@ -59,11 +59,15 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     rm get-pip.py 
     
+RUN pip --no-cache-dir install --upgrade \
+        pip setuptools
+    
 RUN pip --no-cache-dir install \
+    wheel \
     numpy==1.14.5 \
     enum
-
-
+   
+ 
 ##################################
 # Install JDK 8 (latest edition) #
 ##################################
