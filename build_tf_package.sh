@@ -13,7 +13,6 @@ export TF_NEED_S3=0 TF_NEED_OPENCL=0 TF_NEED_GDR=0 TF_ENABLE_XLA=0 TF_NEED_VERBS
 
 export TF_NEED_KAFKA=0 TF_NEED_OPENCL_SYCL=0 TF_SET_ANDROID_WORKSPACE=0 TF_NEED_CLANG=0
 
-
 yes N |./configure
 
 ####################################################################################################
