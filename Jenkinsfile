@@ -2,12 +2,12 @@ pipeline {
   agent {label 'yi-tensorflow'}
     stages {
         stage('Create Build Docker For Tensorflow-CPU-MKL') {
-            steps {
-	              sh 'docker build -t yi/tflow:0.0 .'  
+         steps {
+	        sh 'docker build -t yi/tflow:0.0 .'  
             }
         }
 	      stage('Test The yi/tflow:0.0 Docker Image') { 
-            steps {
+              steps {
                 sh '''#!/bin/bash -xe
 		              echo 'Hello, YI-TFLOW!!'
                     image_id="$(docker images -q yi/tflow:0.0)"
@@ -20,6 +20,25 @@ pipeline {
                    ''' 
             }
         }
+	    stage('Save & Load Docker Image') { 
+            steps {
+                sh '''#!/bin/bash -xe
+		        echo 'Saving Docker image into tar archive'
+                        docker save yi/tflow:0.0 | pv | cat > $WORKSPACE/yi-tflow-0.0.tar
+			
+                        echo 'Remove Original Docker Image' 
+			CURRENT_ID=$(docker images | grep -E '^yi/tflow-vnc.*0.0'' | awk -e '{print $3}')
+			docker rmi -f yi/tflow:0.0
+			
+                        echo 'Loading Docker Image'
+                        pv $WORKSPACE/yi-tflow-0.0.tar | docker load
+			docker tag $CURRENT_ID yi/tflow:0.0
+                        
+                        echo 'Removing temp archive.'  
+                        rm $WORKSPACE/yi-tflow-0.0.tar
+                   ''' 
+		    }
+		}
     }
 	post {
             always {
