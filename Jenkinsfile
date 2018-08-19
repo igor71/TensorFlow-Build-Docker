@@ -27,8 +27,8 @@ pipeline {
                         docker save yi/tflow:0.0 | pv | cat > $WORKSPACE/yi-tflow-0.0.tar
 			
                         echo 'Remove Original Docker Image' 
-			CURRENT_ID=$(docker images | grep -E '^yi/tflow-vnc.*0.0' | awk -e '{print $3}')
-			docker rmi -f yi/tflow:0.0
+			CURRENT_ID=$(docker images | grep -E '^yi/tflow.*0.0' | awk -e '{print $3}')
+			docker rmi -f $CURRENT_ID
 			
                         echo 'Loading Docker Image'
                         pv $WORKSPACE/yi-tflow-0.0.tar | docker load
