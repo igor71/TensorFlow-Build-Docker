@@ -93,8 +93,10 @@ RUN apt-get -q update &&\
     rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin 
 	
 # SSH login fix. Otherwise user is kicked off after login
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN mkdir /var/run/sshd 
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
+    # Preventing double MOTD's mesages shown when login using SSH
+    sed -i "s/UsePAM yes/UsePAM no/" /etc/ssh/sshd_config && \
+    mkdir /var/run/sshd  
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile	
